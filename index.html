@@ -13,15 +13,30 @@
     <!-- Originality Phase: 5 refs | Self-Award: Yes | Metaphor: The Dissolving Theater — presence reveals the world | Paradigm: Multi-modal spatial grammar — each chapter invents its own physics -->
 </head>
 <body>
+    <!-- GLOBAL SINGLE VIDEO (Anti-Freeze Architecture) -->
+    <video id="global-video" class="global-video" autoplay muted loop playsinline preload="auto">
+        <source src="assets/tony.mp4" type="video/mp4">
+    </video>
+    <div class="global-vignette"></div>
+
+    <!-- CINEMATIC LOADER -->
+    <div id="loader" class="loader">
+        <div class="loader-bg"></div>
+        <div class="loader-content">
+            <div class="loader-title">TONY ANDERSON</div>
+            <div class="loader-subtitle mono-xs">THE DISSOLVING THEATER</div>
+            <div class="loader-metric">
+                <span id="loader-num" class="loader-num">00</span>
+                <span class="loader-pct mono-xs">%</span>
+            </div>
+            <div class="loader-bar"><div class="loader-fill" id="loader-fill"></div></div>
+        </div>
+    </div>
 
     <!-- GATE -->
     <div id="gate">
-        <div class="gate-video-wrap">
-            <video id="gate-video-blur" class="gate-video blurred" autoplay muted loop playsinline><source src="assets/tony.mp4" type="video/mp4"></video>
-            <video id="gate-video-clear" class="gate-video clear" autoplay muted loop playsinline><source src="assets/tony.mp4" type="video/mp4"></video>
-            <div class="gate-vignette"></div>
-            <div class="gate-grain"></div>
-        </div>
+        <div class="gate-blur-overlay"></div>
+        <div class="gate-grain"></div>
         <div class="gate-content">
             <div class="gate-overline"><span class="mono-xs">SONIC ARCHITECT</span></div>
             <h1 class="gate-name">
@@ -42,12 +57,9 @@
     <div id="theater" class="theater-hidden">
         <div id="scroll-proxy"></div>
         <div id="stage">
-            <div class="stage-video-wrap">
-                <video id="stage-video" class="stage-video" autoplay muted loop playsinline><source src="assets/tony.mp4" type="video/mp4"></video>
-                <div class="stage-vignette"></div>
-                <div class="stage-grain"></div>
-                <div class="stage-darken" id="stage-darken"></div>
-            </div>
+            <div class="stage-vignette"></div>
+            <div class="stage-grain"></div>
+            <div class="stage-darken" id="stage-darken"></div>
             <div id="audio-pulse" class="audio-pulse"></div>
             <div class="blackout-realm" id="blackout-realm"></div>
 

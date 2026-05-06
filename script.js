@@ -202,18 +202,57 @@
         });
     }
 
-    // ===== GATE =====
-    function initGate() {
+    // ===== LOADER & GATE =====
+    function initLoader() {
+        const loader = $('#loader');
+        const lTitle = $('.loader-title');
+        const lSub = $('.loader-subtitle');
+        const lNum = $('#loader-num');
+        const lFill = $('#loader-fill');
+        const lBar = $('.loader-bar');
+        const lMetric = $('.loader-metric');
+        let loadProgress = { val: 0 };
+        
+        const tlLoader = gsap.timeline();
+        tlLoader.to(lTitle, {y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.2})
+                .to(lSub, {y: 0, opacity: 1, duration: 1, ease: 'power3.out'}, "-=0.7")
+                .to([lMetric, lBar], {opacity: 1, duration: 1}, "-=0.5");
+
+        gsap.to(loadProgress, {
+            val: 100,
+            duration: 4.5,
+            ease: 'power2.inOut',
+            onUpdate: () => {
+                lNum.innerText = Math.floor(loadProgress.val).toString().padStart(2, '0');
+                lFill.style.height = `${loadProgress.val}%`;
+            },
+            onComplete: () => {
+                const gv = $('#global-video');
+                if (gv) {
+                    gv.currentTime = 0;
+                    gv.play().catch(()=>{});
+                }
+                
+                gsap.to(loader, {
+                    opacity: 0, 
+                    duration: 1.2, 
+                    ease: 'power2.inOut', 
+                    onComplete: () => loader.remove()
+                });
+                
+                const tl = gsap.timeline();
+                tl.to('.gate-name-line[data-line="1"]', { opacity: 1, y: 0, duration: 1.6, ease: 'power3.out' });
+                tl.to('.gate-name-line[data-line="2"]', { opacity: 1, y: 0, duration: 1.6, ease: 'power3.out' }, '-=1.1');
+                tl.to('.gate-overline', { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, '-=0.9');
+                tl.to('.gate-enter', { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, '-=0.5');
+            }
+        });
+        
         document.addEventListener('mousemove', e => {
             if (!gate || gate.style.display === 'none') return;
             gate.style.setProperty('--gate-mx', (e.clientX / innerWidth * 100) + '%');
             gate.style.setProperty('--gate-my', (e.clientY / innerHeight * 100) + '%');
         });
-        const tl = gsap.timeline({ delay: 0.4 });
-        tl.to('.gate-name-line[data-line="1"]', { opacity: 1, y: 0, duration: 1.6, ease: 'power3.out' });
-        tl.to('.gate-name-line[data-line="2"]', { opacity: 1, y: 0, duration: 1.6, ease: 'power3.out' }, '-=1.1');
-        tl.to('.gate-overline', { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, '-=0.9');
-        tl.to('.gate-enter', { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, '-=0.5');
     }
 
     // ===== ENTER =====
@@ -225,7 +264,11 @@
         tl.to('.letterbox-top', { height: 0, duration: 1.4, ease: 'power3.inOut' });
         tl.to('.letterbox-bottom', { height: 0, duration: 1.4, ease: 'power3.inOut' }, '<');
         tl.to('.gate-content', { opacity: 0, y: -40, duration: 0.9, ease: 'power2.in' }, '<');
-        tl.to('.gate-video.blurred', { opacity: 0, duration: 1.4, ease: 'power2.inOut' }, '-=0.8');
+        tl.to('.gate-blur-overlay', { opacity: 0, duration: 1.4, ease: 'power2.inOut' }, '-=0.8');
+        tl.call(() => {
+            const gv = $('#global-video');
+            if(gv) gv.classList.add('theater-mode');
+        }, null, '-=0.8');
         tl.to(gate, { opacity: 0, duration: 1, ease: 'power2.inOut' }, '-=0.5');
         tl.set(theater, { className: '' });
         tl.fromTo(theater, { opacity: 0 }, { opacity: 1, duration: 1.4, ease: 'power2.out' }, '-=0.6');
@@ -393,7 +436,8 @@
         (function loop() {
             const ox = ((mx / innerWidth) - 0.5) * 10;
             const oy = ((my / innerHeight) - 0.5) * 6;
-            if(stageVideo) stageVideo.style.transform = `translate(${ox}px, ${oy}px) scale(1.06)`;
+            const gv = $('#global-video');
+            if(gv) gv.style.transform = `translate(${ox}px, ${oy}px) scale(1.06)`;
             
             if (parseFloat(blackoutRealm.style.opacity) > 0.05) {
                 const time = Date.now() * 0.0005;
@@ -414,8 +458,6 @@
 
     // ===== BOOT =====
     addEventListener('load', () => {
-        initGate();
-        const bv = $('#gate-video-blur'), cv = $('#gate-video-clear');
-        if (bv && cv) bv.addEventListener('play', () => { cv.currentTime = bv.currentTime; });
+        initLoader();
     });
 })();
