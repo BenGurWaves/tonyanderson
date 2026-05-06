@@ -19,7 +19,7 @@
     const footerEmail = $('#footer-email');
     const waterTrack = $('#water-track');
 
-    const EMAIL = 'tony@tonyandersonmusic.com';
+    const EMAIL = 'tony@tonyanderson.com';
 
     const chapters = [
         { id: 'ch-presence', start: 0.00, end: 0.14 },
