@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tony Anderson</title>
+    <meta name="description" content="Instrumental & Ambient Music. Each song a self-contained world.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=Source+Code+Pro:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Originality Phase: 5 refs | Self-Award: Yes | Metaphor: The Dissolving Theater — presence reveals the world | Paradigm: Multi-modal spatial grammar — each chapter invents its own physics -->
+</head>
+<body>
+
+    <!-- GATE -->
+    <div id="gate">
+        <div class="gate-video-wrap">
+            <video id="gate-video-blur" class="gate-video blurred" autoplay muted loop playsinline><source src="assets/tony.mp4" type="video/mp4"></video>
+            <video id="gate-video-clear" class="gate-video clear" autoplay muted loop playsinline><source src="assets/tony.mp4" type="video/mp4"></video>
+            <div class="gate-vignette"></div>
+            <div class="gate-grain"></div>
+        </div>
+        <div class="gate-content">
+            <div class="gate-overline"><span class="mono-xs">SONIC ARCHITECT</span></div>
+            <h1 class="gate-name">
+                <span class="gate-name-line" data-line="1">TONY</span>
+                <span class="gate-name-line" data-line="2">ANDERSON</span>
+            </h1>
+            <button id="gate-enter" class="gate-enter" aria-label="Enter">
+                <span class="gate-enter-line"></span>
+                <span class="mono-xs gate-enter-text">ENTER THE SOUND</span>
+                <span class="gate-enter-line"></span>
+            </button>
+        </div>
+        <div class="letterbox letterbox-top"></div>
+        <div class="letterbox letterbox-bottom"></div>
+    </div>
+
+    <!-- THEATER -->
+    <div id="theater" class="theater-hidden">
+        <div id="scroll-proxy"></div>
+        <div id="stage">
+            <div class="stage-video-wrap">
+                <video id="stage-video" class="stage-video" autoplay muted loop playsinline><source src="assets/tony.mp4" type="video/mp4"></video>
+                <div class="stage-vignette"></div>
+                <div class="stage-grain"></div>
+                <div class="stage-darken" id="stage-darken"></div>
+            </div>
+            <div id="audio-pulse" class="audio-pulse"></div>
+            <div class="blackout-realm" id="blackout-realm"></div>
+
+            <!-- ====== CHAPTER 0: PRESENCE — centered cinematic ====== -->
+            <section class="chapter" id="ch-presence">
+                <div class="ch-presence-inner">
+                    <h2 class="serif-massive">TONY<br>ANDERSON</h2>
+                    <p class="sans-whisper">Instrumental & Ambient Music</p>
+                </div>
+            </section>
+
+            <!-- CH1: WORDS — scattered spatial constellation -->
+            <section class="chapter" id="ch-words">
+                <div class="frag" data-x="8" data-y="15" data-size="2.8" data-font="serif-i" data-delay="0">I use instruments</div>
+                <div class="frag" data-x="55" data-y="10" data-size="1.6" data-font="sans" data-delay="0.12">rather than words</div>
+                <div class="frag" data-x="10" data-y="48" data-size="1.3" data-font="sans-l" data-delay="0.25">to express what I'm feeling —</div>
+                <div class="frag" data-x="38" data-y="32" data-size="2" data-font="serif" data-delay="0.38">each song becoming</div>
+                <div class="frag frag-hero" data-x="30" data-y="68" data-size="3.5" data-font="serif-i" data-delay="0.5">a self-contained world.</div>
+                <div class="frag" data-x="52" data-y="82" data-size="1.2" data-font="sans-l" data-delay="0.65">My music is at its best when it unlocks something inside of you.</div>
+            </section>
+
+            <!-- CH2: NIOBRARA — horizontal passage -->
+            <section class="chapter" id="ch-water">
+                <div class="water-track" id="water-track">
+                    <span class="water-char">N</span>
+                    <span class="water-char">I</span>
+                    <span class="water-char">O</span>
+                    <span class="water-char">B</span>
+                    <span class="water-char">R</span>
+                    <span class="water-char">A</span>
+                    <span class="water-char">R</span>
+                    <span class="water-char">A</span>
+                </div>
+                <p class="water-caption mono-xs">PONCA — "RUNNING WATER" — A LIVING ALBUM</p>
+            </section>
+
+            <!-- CH3: GIFT — vast quiet void -->
+            <section class="chapter" id="ch-gift">
+                <div class="gift-inner">
+                    <blockquote class="gift-quote">However you've been introduced to my music, I hope it gives you the same gift it gave me as I wrote it.</blockquote>
+                    <div class="gift-links">
+                        <a href="https://tonypterodactyl.bandcamp.com/" target="_blank" rel="noopener" class="gift-link" id="link-bandcamp">
+                            <span class="mono-xs">SUPPORT DIRECTLY</span>
+                            <span class="gift-link-name">Bandcamp</span>
+                        </a>
+                        <a href="https://www.musicbed.com/artists/tony-anderson/7054" target="_blank" rel="noopener" class="gift-link" id="link-musicbed">
+                            <span class="mono-xs">LICENSING</span>
+                            <span class="gift-link-name">Musicbed</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CH4: CONTACT — Neural Web Typography -->
+            <section class="chapter" id="ch-contact">
+                <canvas id="footer-canvas" class="footer-canvas"></canvas>
+                <div class="void-instruction mono-xs" id="void-hint">CLICK ANYWHERE TO COPY EMAIL</div>
+                <div class="contact-ui">
+                    <a href="https://velocity.calyvent.com/" target="_blank" rel="noopener" class="velocity-link">
+                        <span class="mono-xs velocity-tag">PROTOTYPE PREVIEW BY VELOCITY</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- ABSTRACT MENU OVERLAY -->
+            <div id="menu-overlay" class="menu-overlay">
+                <div class="menu-bg"></div>
+                <div class="menu-orb" id="menu-orb"></div>
+                <div class="menu-content">
+                    <nav class="menu-nav">
+                        <a href="#" class="menu-link" data-text="SANCTUARY">SANCTUARY</a>
+                        <a href="#" class="menu-link" data-text="ARCHIVE">ARCHIVE</a>
+                        <a href="#" class="menu-link" data-text="ATELIER">ATELIER</a>
+                    </nav>
+                    <div class="menu-footer mono-xs">ABSTRACT PROTOTYPE NAVIGATION</div>
+                </div>
+            </div>
+
+            <!-- HUD -->
+            <div class="hud">
+                <div class="hud-coords mono-xs">42.8°N / 100.5°W</div>
+                <div class="hud-progress"><div class="hud-fill" id="hud-fill"></div></div>
+                <div class="hud-audio-wrap">
+                    <button class="hud-audio" id="audio-toggle">
+                        <div class="audio-bars" id="audio-bars"><span></span><span></span><span></span><span></span><span></span></div>
+                        <span class="mono-xs audio-label">SOUND</span>
+                    </button>
+                    <div class="hud-np mono-xs" id="now-playing"><span class="np-t">Younger</span><span class="np-s">—</span><span class="np-a">Tony Anderson</span></div>
+                </div>
+
+                <button class="hud-menu-btn" id="menu-toggle">
+                    <div class="menu-burger">
+                        <span class="mb-line mb-top"></span>
+                        <span class="mb-line mb-bot"></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cursor" class="cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-glow"></div>
+        <div class="cursor-text mono-xs" id="cursor-text"></div>
+    </div>
+    <audio id="audio-player" loop preload="none"><source src="assets/younger.mp3" type="audio/mpeg"></audio>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
