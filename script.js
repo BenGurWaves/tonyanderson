@@ -15,8 +15,8 @@
     const audioToggle = $('#audio-toggle'), barsEl = $('#audio-bars');
     const nowPlaying = $('#now-playing'), cursorEl = $('#cursor');
     const hudFill = $('#hud-fill');
-    const footerCanvas = $('#footer-canvas'), contactUi = document.querySelector('.contact-ui');
-    const copyBtn = $('#footer-copy');
+    const footerAbstract = $('#footer-abstract'), contactUi = $('#contact-ui');
+    const footerEmail = $('#footer-email');
     const waterTrack = $('#water-track');
 
     const EMAIL = 'tony@tonyandersonmusic.com';
@@ -46,11 +46,11 @@
 
     document.addEventListener('mouseover', e => {
         if (e.target.closest('a,button,.gift-link')) cursorEl.classList.add('hovering');
-        if (e.target.closest('#footer-canvas')) { cursorEl.classList.add('copying'); $('#cursor-text').innerText = 'CLICK TO COPY'; }
+        if (e.target.closest('#footer-email')) { cursorEl.classList.add('copying'); $('#cursor-text').innerText = 'CLICK TO COPY'; }
     });
     document.addEventListener('mouseout', e => {
         if (e.target.closest('a,button,.gift-link')) cursorEl.classList.remove('hovering');
-        if (e.target.closest('#footer-canvas')) cursorEl.classList.remove('copying');
+        if (e.target.closest('#footer-email')) cursorEl.classList.remove('copying');
     });
 
     if ('ontouchstart' in window) {
@@ -66,138 +66,30 @@
     });
 
     // ===== STARDUST KINETIC FOOTER =====
-    function initKineticFooter() {
-        if (!footerCanvas) return;
-        const ctx = footerCanvas.getContext('2d');
-        let cW, cH, particles = [];
-        let dissolving = false;
+    // ===== ABSTRACT EMAIL FOOTER =====
+    function initAbstractFooter() {
+        if (!footerEmail) return;
         
-        function build() {
-            cW = footerCanvas.width = innerWidth;
-            cH = footerCanvas.height = innerHeight;
-            
-            const off = document.createElement('canvas');
-            off.width = cW; off.height = cH;
-            const oCtx = off.getContext('2d');
-            
-            const isMobile = cW < 768;
-            const fs = isMobile ? Math.min(cW * 0.085, 45) : Math.min(cW * 0.055, 100);
-            
-            oCtx.font = `italic ${fs}px "Instrument Serif", serif`;
-            oCtx.fillStyle = 'white';
-            oCtx.textAlign = 'center';
-            oCtx.textBaseline = 'middle';
-            
-            if (isMobile) {
-                oCtx.fillText('tony@', cW/2, cH/2 - fs*0.7);
-                oCtx.fillText('tonyandersonmusic.com', cW/2, cH/2 + fs*0.7);
-            } else {
-                oCtx.fillText('tony@tonyandersonmusic.com', cW/2, cH/2);
-            }
-            
-            const data = oCtx.getImageData(0, 0, cW, cH).data;
-            particles = [];
-            const step = isMobile ? 3 : 4; // Dense for legibility
-            
-            for (let y = 0; y < cH; y += step) {
-                for (let x = 0; x < cW; x += step) {
-                    if (data[(y * cW + x) * 4 + 3] > 128) {
-                        particles.push({
-                            bx: x, by: y,
-                            x: x + (Math.random() - 0.5) * cW * 0.5,
-                            y: y + (Math.random() - 0.5) * cH * 0.5,
-                            vx: 0, vy: 0,
-                            size: isMobile ? 1.2 : 1.5,
-                        });
-                    }
-                }
-            }
-        }
-        
-        document.fonts.ready.then(build);
-        window.addEventListener('resize', build);
-        
-        function draw() {
-            ctx.clearRect(0, 0, cW, cH);
-            if (parseFloat(blackoutRealm.style.opacity) > 0.05 && particles.length > 0) {
-                const time = Date.now() * 0.002;
-                ctx.fillStyle = 'rgba(196, 149, 106, 0.85)'; // Ember color
-                ctx.beginPath();
-                
-                for (let i = 0; i < particles.length; i++) {
-                    const p = particles[i];
-                    
-                    if (dissolving) {
-                        p.vy -= 0.05 + Math.random() * 0.05;
-                        p.vx += (Math.random() - 0.5) * 0.2;
-                    } else {
-                        // Gentle shimmer drift
-                        const driftX = Math.sin(time + p.bx * 0.01) * 0.3;
-                        const driftY = Math.cos(time + p.by * 0.01) * 0.3;
-                        
-                        const dx = mx - p.x;
-                        const dy = my - p.y;
-                        const distSq = dx*dx + dy*dy;
-                        
-                        if (distSq < 10000) { // 100px radius
-                            const dist = Math.sqrt(distSq);
-                            const force = (100 - dist) / 100;
-                            p.vx -= (dx / dist) * force * 1.5;
-                            p.vy -= (dy / dist) * force * 1.5;
-                        }
-                        
-                        p.vx += (p.bx - p.x) * 0.06;
-                        p.vy += (p.by - p.y) * 0.06;
-                        
-                        p.x += driftX;
-                        p.y += driftY;
-                    }
-                    
-                    p.vx *= 0.82;
-                    p.vy *= 0.82;
-                    
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    
-                    ctx.rect(p.x, p.y, p.size, p.size);
-                }
-                ctx.fill();
-            }
-            requestAnimationFrame(draw);
-        }
-        draw();
-
-        footerCanvas.addEventListener('click', () => {
-            if(dissolving) return;
+        footerEmail.addEventListener('click', (e) => {
+            e.preventDefault();
             navigator.clipboard.writeText(EMAIL).then(() => {
-                const ct = $('#cursor-text');
-                if(ct) {
-                    ct.innerText = 'COPIED';
-                    setTimeout(() => { if (cursorEl.classList.contains('copying')) ct.innerText = 'CLICK TO COPY'; }, 2000);
-                }
+                footerEmail.classList.add('copied');
                 const vh = $('#void-hint');
                 if (vh) {
                     vh.innerText = 'COPIED TO CLIPBOARD';
                     vh.classList.add('copied');
-                    setTimeout(() => { vh.innerText = 'CLICK ANYWHERE TO COPY EMAIL'; vh.classList.remove('copied'); }, 2000);
                 }
-                
-                // Elegant dissolution
-                dissolving = true;
-                particles.forEach(p => {
-                    p.vy -= Math.random() * 5 + 2;
-                    p.vx += (Math.random() - 0.5) * 4;
-                });
-                
-                // Re-condense beautifully
+                const ct = $('#cursor-text');
+                if (ct) ct.innerText = 'COPIED';
+
                 setTimeout(() => {
-                    dissolving = false;
-                    particles.forEach(p => {
-                        p.x = p.bx + (Math.random() - 0.5) * cW * 0.5;
-                        p.y = p.by - Math.random() * cH;
-                        p.vx = 0; p.vy = 0;
-                    });
-                }, 1600);
+                    footerEmail.classList.remove('copied');
+                    if (vh) {
+                        vh.innerText = 'CLICK EMAIL TO COPY';
+                        vh.classList.remove('copied');
+                    }
+                    if (ct && cursorEl.classList.contains('copying')) ct.innerText = 'CLICK TO COPY';
+                }, 2000);
             });
         });
     }
@@ -272,7 +164,7 @@
         tl.to(gate, { opacity: 0, duration: 1, ease: 'power2.inOut' }, '-=0.5');
         tl.set(theater, { className: '' });
         tl.fromTo(theater, { opacity: 0 }, { opacity: 1, duration: 1.4, ease: 'power2.out' }, '-=0.6');
-        tl.call(() => { initScroll(); initParallax(); initKineticFooter(); });
+        tl.call(() => { initScroll(); initParallax(); initAbstractFooter(); });
     }
 
     $('#gate-enter').addEventListener('click', enter);
@@ -419,13 +311,13 @@
             const e = easeOutExpo(t);
             stageDarken.style.opacity = e;
             blackoutRealm.style.opacity = e;
-            if (footerCanvas) footerCanvas.classList.add('active');
+            if (footerAbstract) footerAbstract.classList.add('active');
             if (contactUi) contactUi.classList.add('active');
             const vh = $('#void-hint'); if (vh) vh.classList.add('active');
         } else {
             stageDarken.style.opacity = 0;
             blackoutRealm.style.opacity = 0;
-            if (footerCanvas) footerCanvas.classList.remove('active');
+            if (footerAbstract) footerAbstract.classList.remove('active');
             if (contactUi) contactUi.classList.remove('active');
             const vh = $('#void-hint'); if (vh) vh.classList.remove('active');
         }
